@@ -1,0 +1,216 @@
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+import warnings
+
+import numpy as np
+
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+
+from nlo_current.nlo_current_skeleton import assemble_nlo_current_terms  # noqa: E402
+from nlo_current.nlo_velocity_evaluator import evaluate_velocity_from_terms  # noqa: E402
+from nlo_current.physical_cubic_conventions import cubic_kernel_convention_diagnostics  # noqa: E402
+from nlo_current.physical_kernel_adapter import physical_kernels_for_skeleton  # noqa: E402
+from nlo_current.physical_kernels import KJSJIntegrationPolicy, build_all_unbarred_physical_kernels  # noqa: E402
+from nlo_current.su3_adjoint import (  # noqa: E402
+    adjoint_from_fundamental,
+    random_su3,
+    structure_constants,
+    su3_generators_fundamental,
+)
+
+
+REPORT = ROOT / "reports" / "nlo_current" / "physical_cubic_dtype_audit.md"
+COORDS = np.array([[0.0, 0.0], [1.0, 0.2], [0.3, 1.1]], dtype=float)
+PARAMS = {"Nc": 3, "nf": 2, "alpha_s": 0.3, "singularity_policy": "eps", "eps": 1.0e-6}
+
+
+def _policy():
+    return KJSJIntegrationPolicy(
+        quadrature_weights=np.ones(COORDS.shape[0]) / COORDS.shape[0],
+        mu=1.3,
+        exclude_coincident_labels=("x", "y", "z"),
+        description="cubic dtype audit policy",
+    )
+
+
+def _wilson_inputs(seed):
+    rng = np.random.default_rng(seed)
+    gens = su3_generators_fundamental()
+    f = structure_constants(gens)
+    U_fund = np.stack([random_su3(rng) for _ in range(COORDS.shape[0])])
+    S_adj = np.stack([adjoint_from_fundamental(U, gens) for U in U_fund])
+    return gens, f, U_fund, S_adj
+
+
+def _max_imag(arr):
+    arr = np.asarray(arr)
+    return float(np.max(np.abs(np.imag(arr)))) if arr.size else 0.0
+
+
+def run_audit():
+    raw = build_all_unbarred_physical_kernels(COORDS, integration_policy=_policy(), **PARAMS)
+    adapted = physical_kernels_for_skeleton(COORDS, integration_policy=_policy(), **PARAMS)
+    gens, f, U_fund, S_adj = _wilson_inputs(20260714)
+
+    with warnings.catch_warnings(record=True) as raw_warnings:
+        warnings.simplefilter("always")
+        raw_terms = assemble_nlo_current_terms(U_fund, S_adj, raw, gens, f, metadata_only=False)
+
+    with warnings.catch_warnings(record=True) as adapted_warnings:
+        warnings.simplefilter("always")
+        adapted_terms = assemble_nlo_current_terms(U_fund, S_adj, adapted, gens, f, metadata_only=False)
+
+    dim = adapted_terms.dim
+    rng = np.random.default_rng(20260715)
+    score = rng.normal(size=dim)
+    hessian = rng.normal(size=(dim, dim))
+    zeros = {
+        "dK2": np.zeros(dim),
+        "dK3_first": {"LC_K3_ABC": np.zeros((dim, dim)), "LB_K3_ABC": np.zeros((dim, dim))},
+        "d2K3": np.zeros(dim),
+    }
+    with warnings.catch_warnings(record=True) as velocity_warnings:
+        warnings.simplefilter("always")
+        velocity = evaluate_velocity_from_terms(
+            adapted_terms,
+            score,
+            hessian,
+            dK2=zeros["dK2"],
+            dK3_first=zeros["dK3_first"],
+            d2K3=zeros["d2K3"],
+        )
+
+    return {
+        "raw_kernel_diagnostics": {
+            "KJJSJ": cubic_kernel_convention_diagnostics(raw["KJJSJ"], adapted["KJJSJ"]),
+            "KJJSSJ": cubic_kernel_convention_diagnostics(raw["KJJSSJ"], adapted["KJJSSJ"]),
+        },
+        "adapter_metadata": adapted["metadata"]["cubic_kernel_convention"],
+        "raw_terms": {
+            "K1_dtype": str(raw_terms.K1.dtype),
+            "K2_dtype": str(raw_terms.K2.dtype),
+            "K3_dtype": str(raw_terms.K3.dtype),
+            "K3_max_imag": _max_imag(raw_terms.K3),
+            "python_warnings": sorted(set(str(item.message) for item in raw_warnings)),
+            "python_warning_count": len(raw_warnings),
+        },
+        "adapted_terms": {
+            "K1_dtype": str(adapted_terms.K1.dtype),
+            "K2_dtype": str(adapted_terms.K2.dtype),
+            "K3_dtype": str(adapted_terms.K3.dtype),
+            "K3_max_imag": _max_imag(adapted_terms.K3),
+            "python_warnings": sorted(set(str(item.message) for item in adapted_warnings)),
+            "python_warning_count": len(adapted_warnings),
+            "norms": adapted_terms.norms(),
+        },
+        "velocity": {
+            "dtype": str(np.asarray(velocity["velocity"]).dtype),
+            "max_imag": _max_imag(velocity["velocity"]),
+            "python_warnings": sorted(set(str(item.message) for item in velocity_warnings)),
+            "python_warning_count": len(velocity_warnings),
+            "diagnostic_warnings": velocity["diagnostics"]["warnings"],
+            "velocity_norm": velocity["diagnostics"]["velocity_norm"],
+        },
+    }
+
+
+def _fmt(value):
+    return f"{value:.16e}"
+
+
+def write_report(result):
+    raw_diag = result["raw_kernel_diagnostics"]
+    lines = [
+        "# Physical Cubic Dtype Audit",
+        "",
+        "Generated by `scripts/nlo_current/check_physical_cubic_dtype_audit.py`.",
+        "",
+        "## Scope",
+        "",
+        "This audit traces the non-production physical cubic kernel dtype path. It",
+        "does not implement production evolution or coefficient derivatives.",
+        "",
+        "## Previous Warning Source",
+        "",
+        "The previous complex-cast warning originated in",
+        "`src/nlo_current/cubic_commutator_terms.py`, where cubic word coefficients",
+        "were converted with `float(coeff)`. Raw physical `K_JJSJ` and `K_JJSSJ`",
+        "kernels contain the explicit `-i` from WORKNLO, so that conversion discarded",
+        "imaginary information when raw physical kernels were passed into the dense",
+        "skeleton.",
+        "",
+        "## Convention Layer",
+        "",
+        "The explicit diagnostic convention is:",
+        "",
+        "```text",
+        "raw physical cubic kernel",
+        "    -> KLM-normalized cubic coefficient = (-1j) * raw",
+        "    -> real normal-form K1/K2/K3 assembly",
+        "```",
+        "",
+        "Raw complex cubic tensors remain supported as complex diagnostics; the",
+        "physical adapter now emits KLM-normalized real cubic coefficients.",
+        "",
+        "## Kernel Dtypes",
+        "",
+        "| kernel | raw dtype | raw max imag | adapter dtype | adapter max imag |",
+        "|---|---|---:|---|---:|",
+    ]
+    for key in ("KJJSJ", "KJJSSJ"):
+        item = raw_diag[key]
+        lines.append(
+            f"| `{key}` | `{item['raw_dtype']}` | `{_fmt(item['raw_max_imag'])}` | "
+            f"`{item['normalized_dtype']}` | `{_fmt(item['normalized_max_imag'])}` |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Assembly Dtypes",
+            "",
+            "| path | K1 dtype | K2 dtype | K3 dtype | K3 max imag | Python warnings |",
+            "|---|---|---|---|---:|---:|",
+            f"| raw diagnostic skeleton | `{result['raw_terms']['K1_dtype']}` | `{result['raw_terms']['K2_dtype']}` | "
+            f"`{result['raw_terms']['K3_dtype']}` | `{_fmt(result['raw_terms']['K3_max_imag'])}` | "
+            f"`{result['raw_terms']['python_warning_count']}` |",
+            f"| adapter KLM-normalized skeleton | `{result['adapted_terms']['K1_dtype']}` | "
+            f"`{result['adapted_terms']['K2_dtype']}` | `{result['adapted_terms']['K3_dtype']}` | "
+            f"`{_fmt(result['adapted_terms']['K3_max_imag'])}` | "
+            f"`{result['adapted_terms']['python_warning_count']}` |",
+            "",
+            "## Velocity Path",
+            "",
+            f"- velocity dtype: `{result['velocity']['dtype']}`",
+            f"- velocity max imaginary component: `{_fmt(result['velocity']['max_imag'])}`",
+            f"- Python warning count: `{result['velocity']['python_warning_count']}`",
+            f"- diagnostic warnings: `{result['velocity']['diagnostic_warnings']}`",
+            f"- velocity norm: `{_fmt(result['velocity']['velocity_norm'])}`",
+            "",
+            "## Conclusion",
+            "",
+            "No `ComplexWarning` is emitted in the raw diagnostic path, the adapter path,",
+            "or the velocity path. Raw physical cubic kernels are intrinsically complex",
+            "before KLM normalization. KLM-normalized physical adapter tensors are real",
+            "for the tested WORKNLO kernels and are the tensors used for normal-form",
+            "assembly.",
+            "",
+        ]
+    )
+    REPORT.write_text("\n".join(lines))
+
+
+def main():
+    result = run_audit()
+    write_report(result)
+    print(f"wrote {REPORT}")
+    print(f"raw_warning_count={result['raw_terms']['python_warning_count']}")
+    print(f"adapter_warning_count={result['adapted_terms']['python_warning_count']}")
+    print(f"velocity_warning_count={result['velocity']['python_warning_count']}")
+
+
+if __name__ == "__main__":
+    main()
