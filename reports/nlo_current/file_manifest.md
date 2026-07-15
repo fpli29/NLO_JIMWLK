@@ -1,0 +1,244 @@
+# NLO Current No-Git File Manifest
+
+This workspace has no Git metadata. The files below are the source, test,
+script, documentation, and report artifacts created or modified during the
+local no-git workflow runs.
+
+## KJJSJ analytic cubic derivative workflow additions
+
+Created or modified for the \(K_{JJSJ}\)-only analytic cubic derivative
+workflow:
+
+- `docs/nlo_current/KJJSJ_analytic_cubic_derivatives.md`
+- `docs/nlo_current/NLO_JIMWLK_generalized_current_derivation_summary.md`
+- `docs/nlo_current/analytic_physical_coefficient_derivative_derivation.md`
+- `docs/nlo_current/nlo_current_map_status.md`
+- `docs/nlo_current/physical_kernel_status.md`
+- `src/nlo_current/analytic_cubic_derivatives.py`
+- `src/nlo_current/analytic_cubic_commutator_derivatives.py`
+- `src/nlo_current/physical_coefficient_derivatives.py`
+- `src/nlo_current/physical_nlo_current.py`
+- `tests/nlo_current/test_analytic_coefficient_derivatives.py`
+- `tests/nlo_current/test_analytic_cubic_derivatives.py`
+- `scripts/nlo_current/benchmark_coefficient_derivative_backends.py`
+- `scripts/nlo_current/check_analytic_coefficient_derivatives.py`
+- `scripts/nlo_current/check_kjjsj_analytic_cubic_derivatives.py`
+- `reports/nlo_current/analytic_coefficient_derivative_benchmark.md`
+- `reports/nlo_current/analytic_coefficient_derivative_failure_modes.md`
+- `reports/nlo_current/analytic_coefficient_derivative_validation_report.md`
+- `reports/nlo_current/file_manifest.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_benchmark.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_failure_modes.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_start_status.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_validation_report.md`
+- `reports/nlo_current/kjjsj_normal_form_inventory.md`
+- `reports/nlo_current/physical_density_closure_report.md`
+- `reports/nlo_current/physical_nlo_current_assembly_report.md`
+
+## Intended workflow artifacts
+
+- `docs/nlo_current/KJSJ_signfix_KJSSJ_ordered_current.md`
+- `docs/nlo_current/KJJSJ_cubic_ordered_current.md`
+- `docs/nlo_current/KJJSJ_analytic_cubic_derivatives.md`
+- `docs/nlo_current/KJJSSJ_cubic_ordered_current.md`
+- `docs/nlo_current/KJSJ_physical_kernel_derivation_note.md`
+- `docs/nlo_current/KLM_appendix_A_dipole_targets_notes.md`
+- `docs/nlo_current/KLM_physical_kernel_formula_notes.md`
+- `docs/nlo_current/Kqbarq_ordered_current.md`
+- `docs/nlo_current/NLO_JIMWLK_generalized_current_derivation_summary.md`
+- `docs/nlo_current/NLO_JIMWLK_generalized_current_executive_summary.md`
+- `docs/nlo_current/analytic_lie_derivative_conventions.md`
+- `docs/nlo_current/analytic_physical_coefficient_derivative_derivation.md`
+- `docs/nlo_current/coefficient_derivative_backend_limitations.md`
+- `docs/nlo_current/coefficient_derivative_strategy.md`
+- `docs/nlo_current/cubic_coincident_site_commutators.md`
+- `docs/nlo_current/cubic_current_with_commutator_corrections.md`
+- `docs/nlo_current/dipole_validation_status.md`
+- `docs/nlo_current/full_dipole_validation_plan.md`
+- `docs/nlo_current/nlo_current_map_status.md`
+- `docs/nlo_current/nlo_current_skeleton_design.md`
+- `docs/nlo_current/pawula_positivity_diagnostic_plan.md`
+- `docs/nlo_current/physical_nlo_current_assembly_plan.md`
+- `docs/nlo_current/physical_kernel_integration_plan.md`
+- `docs/nlo_current/physical_kernel_status.md`
+- `docs/nlo_current/physical_density_closure_derivation.md`
+- `docs/nlo_current/three_generator_sector_start.md`
+- `docs/nlo_current/three_generator_sector_summary.md`
+- `docs/nlo_current/two_generator_sector_summary.md`
+- `src/nlo_current/__init__.py`
+- `src/nlo_current/analytic_cubic_derivatives.py`
+- `src/nlo_current/analytic_lie_derivatives.py`
+- `src/nlo_current/analytic_two_generator_derivatives.py`
+- `src/nlo_current/coefficient_derivatives.py`
+- `src/nlo_current/coordinate_kernels.py`
+- `src/nlo_current/cubic_commutator_terms.py`
+- `src/nlo_current/dipole_appendix_targets.py`
+- `src/nlo_current/dipole_hamiltonian_action.py`
+- `src/nlo_current/dipole_observable.py`
+- `src/nlo_current/finite_difference_scores.py`
+- `src/nlo_current/lie_word_algebra.py`
+- `src/nlo_current/nlo_current_skeleton.py`
+- `src/nlo_current/nlo_velocity_evaluator.py`
+- `src/nlo_current/physical_cubic_conventions.py`
+- `src/nlo_current/physical_coefficient_derivatives.py`
+- `src/nlo_current/physical_current_divergence.py`
+- `src/nlo_current/physical_density_closure.py`
+- `src/nlo_current/physical_density_operator.py`
+- `src/nlo_current/physical_kernel_adapter.py`
+- `src/nlo_current/physical_kernels.py`
+- `src/nlo_current/physical_nlo_current.py`
+- `src/nlo_current/su3_adjoint.py`
+- `src/nlo_current/synthetic_kernels.py`
+- `src/nlo_current/test_densities.py`
+- `src/nlo_current/three_generator_terms.py`
+- `src/nlo_current/two_generator_terms.py`
+- `tests/nlo_current/test_analytic_coefficient_derivatives.py`
+- `tests/nlo_current/test_analytic_cubic_derivatives.py`
+- `tests/nlo_current/test_analytic_lie_derivatives.py`
+- `tests/nlo_current/test_cubic_commutator_end_to_end.py`
+- `tests/nlo_current/test_coefficient_derivatives.py`
+- `tests/nlo_current/test_cubic_ordered_current.py`
+- `tests/nlo_current/test_dipole_generator_actions.py`
+- `tests/nlo_current/test_dipole_hamiltonian_action.py`
+- `tests/nlo_current/test_su3_adjoint_conventions.py`
+- `tests/nlo_current/test_klm_B5_identity.py`
+- `tests/nlo_current/test_kjjsj_coefficients.py`
+- `tests/nlo_current/test_kjjssj_coefficients.py`
+- `tests/nlo_current/test_kjjssj_cubic_current.py`
+- `tests/nlo_current/test_kqbarq_coefficient.py`
+- `tests/nlo_current/test_lie_word_algebra.py`
+- `tests/nlo_current/test_lie_word_canonicalization_fd.py`
+- `tests/nlo_current/test_nlo_current_skeleton.py`
+- `tests/nlo_current/test_nlo_sector_assembly.py`
+- `tests/nlo_current/test_nlo_velocity_with_coefficient_derivatives.py`
+- `tests/nlo_current/test_ordered_lr_current.py`
+- `tests/nlo_current/test_pawula_positivity_toy.py`
+- `tests/nlo_current/test_physical_kernel_adapter.py`
+- `tests/nlo_current/test_physical_kernels.py`
+- `tests/nlo_current/test_physical_density_closure.py`
+- `tests/nlo_current/test_physical_nlo_current.py`
+- `scripts/nlo_current/build_nlo_current_skeleton_demo.py`
+- `scripts/nlo_current/benchmark_coefficient_derivative_backends.py`
+- `scripts/nlo_current/check_analytic_coefficient_derivatives.py`
+- `scripts/nlo_current/check_coefficient_derivative_backend.py`
+- `scripts/nlo_current/check_cubic_commutator_corrections.py`
+- `scripts/nlo_current/check_kjjsj_cubic_requirements.py`
+- `scripts/nlo_current/check_kjjsj_analytic_cubic_derivatives.py`
+- `scripts/nlo_current/check_kjjssj_cubic_requirements.py`
+- `scripts/nlo_current/check_kjssj_symmetry.py`
+- `scripts/nlo_current/check_kqbarq_physical_finite_grid.py`
+- `scripts/nlo_current/check_kqbarq_symmetry.py`
+- `scripts/nlo_current/check_pawula_positivity_toy.py`
+- `scripts/nlo_current/check_physical_cubic_dtype_audit.py`
+- `scripts/nlo_current/check_physical_density_closure.py`
+- `scripts/nlo_current/check_physical_kernel_integration.py`
+- `scripts/nlo_current/full_dipole_validation.py`
+- `scripts/nlo_current/full_dipole_validation_physical_kernels.py`
+- `scripts/nlo_current/validate_dipole_kjjsj_skeleton.py`
+- `scripts/nlo_current/validate_dipole_kjjssj_skeleton.py`
+- `scripts/nlo_current/validate_dipole_two_generator_terms.py`
+- `reports/nlo_current/repo_map.md`
+- `reports/nlo_current/appendix_A_convention_diagnosis_report.md`
+- `reports/nlo_current/analytic_coefficient_derivative_benchmark.md`
+- `reports/nlo_current/analytic_coefficient_derivative_failure_modes.md`
+- `reports/nlo_current/analytic_coefficient_derivative_start_status.md`
+- `reports/nlo_current/analytic_coefficient_derivative_validation_report.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_benchmark.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_failure_modes.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_start_status.md`
+- `reports/nlo_current/kjjsj_analytic_cubic_validation_report.md`
+- `reports/nlo_current/kjjsj_normal_form_inventory.md`
+- `reports/nlo_current/coefficient_derivatives_start_status.md`
+- `reports/nlo_current/coefficient_derivative_backend_report.md`
+- `reports/nlo_current/cubic_i_convention_calibration_report.md`
+- `reports/nlo_current/cubic_commutator_start_status.md`
+- `reports/nlo_current/cubic_commutator_corrections_report.md`
+- `reports/nlo_current/cubic_commutator_end_to_end_fd_report.md`
+- `reports/nlo_current/derivation_summary_start_status.md`
+- `reports/nlo_current/derivation_summary_consistency_report.md`
+- `reports/nlo_current/dipole_validation_start_status.md`
+- `reports/nlo_current/full_dipole_validation_report.md`
+- `reports/nlo_current/full_dipole_validation_physical_kernel_report.md`
+- `reports/nlo_current/kqbarq_physical_finite_grid_diagnosis.md`
+- `reports/nlo_current/nlo_current_skeleton_start_status.md`
+- `reports/nlo_current/nlo_current_skeleton_demo_report.md`
+- `reports/nlo_current/pawula_positivity_diagnostic_report.md`
+- `reports/nlo_current/physical_kernel_start_status.md`
+- `reports/nlo_current/physical_cubic_dtype_audit.md`
+- `reports/nlo_current/density_closure_start_status.md`
+- `reports/nlo_current/physical_density_closure_failure_modes.md`
+- `reports/nlo_current/physical_density_closure_report.md`
+- `reports/nlo_current/physical_kernel_integration_report.md`
+- `reports/nlo_current/physical_nlo_current_assembly_report.md`
+- `reports/nlo_current/lie_word_canonicalization_fd_report.md`
+- `reports/nlo_current/kjjsj_start_status.md`
+- `reports/nlo_current/kjjsj_llr_expansion_fd_report.md`
+- `reports/nlo_current/kjjsj_kernel_xy_symmetry_report.md`
+- `reports/nlo_current/kjjsj_cubic_requirements_report.md`
+- `reports/nlo_current/kjjsj_appendix_target_validation_report.md`
+- `reports/nlo_current/kjsj_physical_kernel_validation_report.md`
+- `reports/nlo_current/kjjssj_start_status.md`
+- `reports/nlo_current/kjjssj_cubic_current_fd_report.md`
+- `reports/nlo_current/kjjssj_kernel_symmetry_report.md`
+- `reports/nlo_current/kjjssj_cubic_requirements_report.md`
+- `reports/nlo_current/kjjssj_appendix_target_validation_report.md`
+- `reports/nlo_current/kqbarq_start_status.md`
+- `reports/nlo_current/left_divergence_identity_report.md`
+- `reports/nlo_current/ordered_lr_current_fd_report.md`
+- `reports/nlo_current/kjssj_symmetry_report.md`
+- `reports/nlo_current/kjssj_appendix_target_validation_report.md`
+- `reports/nlo_current/kqbarq_symmetry_report.md`
+- `reports/nlo_current/file_manifest.md`
+
+## Generated cache or metadata files observed after testing
+
+These are not source deliverables, but they were present after running the test
+and script commands in no-git mode.
+
+- `docs/.DS_Store`
+- `reports/.DS_Store`
+- `scripts/.DS_Store`
+- `tests/.DS_Store`
+- `src/nlo_current/__pycache__/__init__.cpython-310.pyc`
+- `src/nlo_current/__pycache__/coefficient_derivatives.cpython-310.pyc`
+- `src/nlo_current/__pycache__/cubic_commutator_terms.cpython-310.pyc`
+- `src/nlo_current/__pycache__/dipole_appendix_targets.cpython-310.pyc`
+- `src/nlo_current/__pycache__/dipole_hamiltonian_action.cpython-310.pyc`
+- `src/nlo_current/__pycache__/dipole_observable.cpython-310.pyc`
+- `src/nlo_current/__pycache__/finite_difference_scores.cpython-310.pyc`
+- `src/nlo_current/__pycache__/lie_word_algebra.cpython-310.pyc`
+- `src/nlo_current/__pycache__/nlo_current_skeleton.cpython-310.pyc`
+- `src/nlo_current/__pycache__/nlo_velocity_evaluator.cpython-310.pyc`
+- `src/nlo_current/__pycache__/su3_adjoint.cpython-310.pyc`
+- `src/nlo_current/__pycache__/synthetic_kernels.cpython-310.pyc`
+- `src/nlo_current/__pycache__/three_generator_terms.cpython-310.pyc`
+- `src/nlo_current/__pycache__/two_generator_terms.cpython-310.pyc`
+- `tests/nlo_current/__pycache__/test_coefficient_derivatives.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_cubic_commutator_end_to_end.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_cubic_ordered_current.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_dipole_generator_actions.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_dipole_hamiltonian_action.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_kjjsj_coefficients.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_kjjssj_coefficients.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_kjjssj_cubic_current.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_klm_B5_identity.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_kqbarq_coefficient.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_lie_word_algebra.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_lie_word_canonicalization_fd.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_nlo_current_skeleton.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_nlo_sector_assembly.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_nlo_velocity_with_coefficient_derivatives.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_ordered_lr_current.cpython-310-pytest-9.1.1.pyc`
+- `tests/nlo_current/__pycache__/test_su3_adjoint_conventions.cpython-310-pytest-9.1.1.pyc`
+
+## Existing files intentionally not modified
+
+- `NLO_JIMWLK_current_worklog_KJSJ.md`
+- `NLO_JIMWLK_current_KJSJ_signfix_KJSSJ_derivation.md`
+- `WORKNLO.tex`
+- `codex_nlo_current_ordered_lr_kjssj_workflow.md`
+- `codex_nlo_current_kqbarq_workflow.md`
+- `codex_nlo_current_kjjsj_cubic_workflow.md`
+- `codex_nlo_current_kjjssj_cubic_workflow.md`
+- `codex_nlo_current_cubic_commutators_workflow.md`
+- `1405.0418v2.pdf`
